@@ -63,7 +63,7 @@ Below are two setup flows depending on how much customization you need. Both req
    * `PAYLOAD_SECRET=`
    * `STRIPE_SECRET_KEY=`
    * `STRIPE_WEBHOOK_SECRET=`
-   * `BLOB_READ_WRITE_TOKEN=`
+  * `BLOB_READ_WRITE_TOKEN=` - must follow the format `vercel_blob_rw_<store_id>_<random_string>`
    * `NEXT_PUBLIC_APP_URL=http://localhost:3000`
    * `NEXT_PUBLIC_ROOT_DOMAIN=localhost:3000`
    * `NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false`
