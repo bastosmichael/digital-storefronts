@@ -1,177 +1,140 @@
-# Multi-Tenant E-Commerce with Platform Fees
+# Multi-Tenant E-Commerce
 
-![7](https://github.com/user-attachments/assets/cc429a6b-ae9a-43d1-ac22-15a15cc4955a)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A modern e-commerce platform built with Next.js, Payload CMS, and Stripe, featuring multi-tenant architecture and platform fees capabilities.
+A modern SaaS template for building digital marketplaces. It offers tenant specific storefronts, flexible checkout, and an admin experience powered by Payload CMS and Next.js.
+
+## Table of Contents
+
+- [Features](#features)
+- [Demo](#demo)
+- [Setup](#setup)
+  - [Simple Mode Setup](#simple-mode-setup)
+  - [Advanced Mode Setup](#advanced-mode-setup)
+- [Usage](#usage)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [FAQ](#faq)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+- [Contact](#contact)
 
 ## Features
 
-- 🏬 Multi-tenant architecture
-- 🌐 Vendor subdomains
-- 🎨 Custom merchant storefronts
-- 💳 Stripe Connect integration
-- 💰 Automatic platform fees
-- ⭐ Product ratings & reviews
-- 📚 User purchase library
-- 🧑‍💼 Role-based access control
-- 🛠️ Admin dashboard
-- 🧾 Merchant dashboard
-- 🧱 Payload CMS backend
-- 🗂️ Category & product filtering
-- 🔍 Search functionality
-- 🖼️ Image upload support
-- ⚙️ Built with Next.js 15
-- 🎨 TailwindCSS V4 styling
-- 💅 ShadcnUI components
+- Serve many merchants from a single installation using tenant aware routing
+- Issue vendor subdomains with wildcard DNS support
+- Collect payments through Stripe Connect and apply automatic platform fees
+- Let customers leave ratings and reviews on purchased products
+- Manage inventory, categories, and tags from a Payload CMS dashboard
+- Provide each buyer with a personal download library
+- Offer search and advanced filtering across categories
+- Upload images using Vercel Blob storage
 
-## Prerequisites
+## Demo
 
-- Node.js 18+ or Bun 1.0+
-- MongoDB Atlas account
-- Stripe account
-- Vercel account (for Blob storage)
+_No live demo is available._
 
-## Getting Started
+## Setup
 
-### Installation
+Below are two setup flows depending on how much customization you need. Both require Node.js 18+ or Bun 1+.
 
-#### Using Bun (Recommended)
+### Simple Mode Setup
 
-```bash
-# Clone the repository
-git clone https://github.com/code-with-antonio/next15-multitenant-ecommerce.git
-cd multitenant-ecommerce
+1. **Clone the Repository**
+   ```bash
+   git clone <repo-url>
+   cd digital-storefronts
+   ```
+2. **Install Dependencies**
 
-# Install dependencies
-bun install
+   ```bash
+   npm install
+   ```
 
-# Copy environment variables
-cp .env.example .env
-```
+3. **Configure Environment**
 
-#### Using npm
+   ```bash
+   cp .env.example .env.local
+   ```
 
-```bash
-# Clone the repository
-git clone https://github.com/code-with-antonio/next15-multitenant-ecommerce.git
-cd multitenant-ecommerce
+   Required variables:
+   * `APP_MODE=simple`
+   * `DATABASE_URI=`
+   * `PAYLOAD_SECRET=`
+   * `STRIPE_SECRET_KEY=`
+   * `STRIPE_WEBHOOK_SECRET=`
+   * `BLOB_READ_WRITE_TOKEN=`
+   * `NEXT_PUBLIC_APP_URL=http://localhost:3000`
+   * `NEXT_PUBLIC_ROOT_DOMAIN=localhost:3000`
+   * `NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false`
 
-# Install dependencies
-npm install
+4. **Run the App**
 
-# Copy environment variables
-cp .env.example .env
-```
+   ```bash
+   npm run dev
+   ```
 
-#### Using yarn
+### Advanced Mode Setup
 
-```bash
-# Clone the repository
-git clone https://github.com/code-with-antonio/next15-multitenant-ecommerce.git
-cd multitenant-ecommerce
+For production you can enable wildcard subdomain routing and customize the platform fee percentage. Ensure your DNS provider supports `*.yourdomain.com` records.
 
-# Install dependencies
-yarn install
-
-# Copy environment variables
-cp .env.example .env
-```
-
-### Environment Variables
-
-Update the `.env` file with your configuration:
+Set the following variables in `.env.local`:
 
 ```env
-# Database
-DATABASE_URI=your_mongodb_uri
-PAYLOAD_SECRET=your_payload_secret
-
-# Global
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_ROOT_DOMAIN=localhost:3000
-NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false
-
-# Stripe
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-
-# Vercel Blob
-BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
+NEXT_PUBLIC_ROOT_DOMAIN=yourdomain.com
+NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=true
+PLATFORM_FEE_PERCENTAGE=10
 ```
 
-### Subdomain Routing Configuration
-
-The platform supports wildcard subdomain routing, allowing each vendor to have their own unique subdomain (e.g., `vendorname.yourdomain.com`). This feature is controlled by the `NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING` environment variable.
-
-#### Development
-By default, subdomain routing is disabled in development (`NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING="false"`), and all stores are accessed through routes like:
-```
-http://localhost:3000/tenants/[tenant-slug]
-```
-
-#### Production
-To enable subdomain routing in production:
-
-1. Configure your DNS provider with a wildcard subdomain record:
-   ```
-   *.yourdomain.com  →  your-vercel-deployment.vercel.app
-   ```
-
-2. Update your environment variables:
-   ```env
-   NEXT_PUBLIC_ROOT_DOMAIN=yourdomain.com
-   NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING="true"
-   ```
-
-Once enabled, stores will be accessible through their unique subdomains:
-```
-https://tenantslug.yourdomain.com
-```
-
-#### Notes
-- Make sure your hosting provider (e.g., Vercel) supports wildcard subdomains
-- Each subdomain will automatically serve the corresponding store's content
-- SSL certificates should be configured to support wildcard subdomains
-- The main marketplace will remain accessible at your root domain
-
-### Database Setup
+Run database migrations and seeds:
 
 ```bash
-# Using Bun
-bun run db:fresh
-bun run db:seed
-
-# Using npm
 npm run db:fresh
 npm run db:seed
-
-# Using yarn
-yarn db:fresh
-yarn db:seed
 ```
 
-### Development
+Then start the app with:
 
 ```bash
-# Using Bun
-bun run dev
-
-# Using npm
-npm run dev
-
-# Using yarn
-yarn dev
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
+1. Register as a new merchant to create your own tenant.
+2. Upload products and images from the admin dashboard.
+3. Share your store via `https://yourtenant.yourdomain.com` once subdomains are enabled.
+4. Customers browse products, add them to the cart and purchase through Stripe.
+5. Purchased items appear in the customer's library for future downloads and reviews.
 
-## Available Scripts
+## Deployment
 
-- `dev` - Start development server
-- `build` - Build for production
-- `start` - Start production server
-- `lint` - Run ESLint
-- `generate:types` - Generate Payload CMS types
-- `db:fresh` - Reset and migrate database
-- `db:seed` - Seed database with initial data
+Deploy easily to Vercel. After connecting the repository, set the environment variables from `.env.local` in the Vercel dashboard.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project)
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request. See `CONTRIBUTING.md` if available.
+
+## FAQ
+
+**How do platform fees work?** The variable `PLATFORM_FEE_PERCENTAGE` sets the percentage taken from each transaction and is applied automatically by Stripe.
+
+**Can I disable subdomains?** Yes. Keep `NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false` and access stores via `/tenants/[slug]` routes.
+
+**Which database does this project use?** MongoDB via Payload CMS. Provide the connection string in `DATABASE_URI`.
+
+## License
+
+This project is licensed under the MIT license.
+
+## Acknowledgements
+
+Built with [Next.js](https://nextjs.org/), [Payload CMS](https://payloadcms.com/), [Stripe](https://stripe.com/), and [shadcn/ui](https://ui.shadcn.com/).
+
+## Contact
+
+For support or questions, please open an issue in this repository.
+
