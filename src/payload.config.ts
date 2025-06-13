@@ -23,6 +23,10 @@ import { Categories } from './collections/Categories'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const cloudPlugin = process.env.PAYLOAD_CLOUD_API_KEY
+  ? [payloadCloudPlugin({ apiKey: process.env.PAYLOAD_CLOUD_API_KEY })]
+  : []
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -44,7 +48,7 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    payloadCloudPlugin(),
+    ...cloudPlugin,
     multiTenantPlugin({
       collections: {
         products: {},
