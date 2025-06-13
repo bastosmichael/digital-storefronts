@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27017:27017
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install --legacy-peer-deps
+      - name: Create env file
+        run: |
+          cat <<'EOF' > .env.local
+          DATABASE_URI=mongodb://localhost:27017/test
+          PAYLOAD_SECRET=secret
+          STRIPE_SECRET_KEY=sk_test
+          STRIPE_WEBHOOK_SECRET=whsec_test
+          BLOB_READ_WRITE_TOKEN=vercel_blob_rw_0000_dummytoken
+          NEXT_PUBLIC_APP_URL=http://localhost:3000
+          NEXT_PUBLIC_ROOT_DOMAIN=localhost:3000
+          NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false
+          EOF
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test --if-present
