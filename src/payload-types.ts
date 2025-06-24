@@ -161,11 +161,11 @@ export interface User {
 export interface Tenant {
   id: string;
   /**
-   * This is the name of the store (e.g. Antonio's Store)
+   * This is the name of the store (e.g. Example Store)
    */
   name: string;
   /**
-   * This is the subdomain for the store (e.g. [slug].funroad.com)
+   * This is the subdomain for the store (e.g. [slug].example.com)
    */
   slug: string;
   image?: (string | null) | Media;
