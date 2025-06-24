@@ -1,6 +1,6 @@
-# Overview of Agents in digital-storefronts
+# Overview of Agents in Digital Storefront
 
-This document outlines the LLM-based and autonomous agents used within the digital-storefronts project. It serves as a reference for contributors and AI tooling, detailing the roles, triggers, behaviors, and outputs of each agent. This documentation aids in understanding and reproducing the behavior of these agents.
+This document outlines the LLM-based and autonomous agents used within the Digital Storefront project. It serves as a reference for contributors and AI tooling, detailing the roles, triggers, behaviors, and outputs of each agent. This documentation aids in understanding and reproducing the behavior of these agents.
 
 ## Table of Agents
 

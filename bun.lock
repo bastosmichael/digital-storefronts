@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "multitenant-ecommerce",
+      "name": "digital-storefront",
       "dependencies": {
         "@hookform/resolvers": "^3.0.0",
         "@payloadcms/db-mongodb": "3.34.0",

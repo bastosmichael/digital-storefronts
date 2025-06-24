@@ -1,4 +1,4 @@
-# Multi-Tenant E-Commerce
+# Digital Storefront
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -7,7 +7,6 @@ A modern SaaS template for building digital marketplaces. It offers tenant speci
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Setup](#setup)
   - [Simple Mode Setup](#simple-mode-setup)
   - [Advanced Mode Setup](#advanced-mode-setup)
@@ -30,28 +29,19 @@ A modern SaaS template for building digital marketplaces. It offers tenant speci
 - Offer search and advanced filtering across categories
 - Upload images using Vercel Blob storage
 
-## Demo
-
-_No live demo is available._
-
 ## Setup
 
 Below are two setup flows depending on how much customization you need. Both require Node.js 18+ or Bun 1+.
 
 ### Simple Mode Setup
 
-1. **Clone the Repository**
-   ```bash
-   git clone <repo-url>
-   cd digital-storefronts
-   ```
-2. **Install Dependencies**
+1. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-3. **Configure Environment**
+2. **Configure Environment**
 
    ```bash
    cp .env.example .env.local
@@ -68,7 +58,7 @@ Below are two setup flows depending on how much customization you need. Both req
    * `NEXT_PUBLIC_ROOT_DOMAIN=localhost:3000`
    * `NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING=false`
 
-4. **Run the App**
+3. **Run the App**
 
    ```bash
    npm run dev
